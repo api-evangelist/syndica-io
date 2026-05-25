@@ -1,0 +1,304 @@
+aid: syndica
+url: https://raw.githubusercontent.com/api-evangelist/syndica-io/refs/heads/main/apis.yml
+apis:
+- aid: syndica:syndica-solana-rpc-http-api
+  name: Syndica Solana RPC (HTTP) API
+  tags:
+  - Solana
+  - RPC
+  - Blockchain
+  - JSON-RPC
+  - HTTP
+  humanURL: https://docs.syndica.io/platform/solana-rpc/overview
+  baseURL: https://solana-mainnet.api.syndica.io
+  properties:
+  - url: https://docs.syndica.io/platform/solana-rpc/overview
+    type: Documentation
+  - url: https://docs.syndica.io/platform/getting-started/make-your-first-rpc-call
+    type: Quickstart
+  - url: https://docs.syndica.io/platform/concepts/api-keys
+    type: Authentication
+  - url: https://blog.syndica.io/credential-rate-limits-manage-and-secure-your-solana-rpc-endpoints-using-custom-rules/
+    type: RateLimits
+  - url: https://github.com/Syndica/solana-rpc-demo
+    type: SampleCode
+  description: High-performance Solana JSON-RPC HTTP endpoints served from a fault-tolerant elastic-node
+    architecture across four global regions (Northern Virginia, Oregon, London, Singapore). Supports the
+    full standard Solana RPC method surface (getAccountInfo, getBalance, getTransaction, sendTransaction,
+    getProgramAccounts, getSignaturesForAddress, etc.) with credential-level rate limits, per-method
+    routing rules, and observability (detailed logging, performance metrics, usage insights).
+- aid: syndica:syndica-solana-rpc-websocket-api
+  name: Syndica Solana RPC (WebSocket) API
+  tags:
+  - Solana
+  - RPC
+  - Blockchain
+  - WebSocket
+  - PubSub
+  - Streaming
+  humanURL: https://docs.syndica.io/platform/getting-started/subscribe-to-websocket-events
+  baseURL: wss://solana-mainnet.api.syndica.io
+  properties:
+  - url: https://docs.syndica.io/platform/getting-started/subscribe-to-websocket-events
+    type: Documentation
+  - url: https://docs.syndica.io/platform/solana-rpc/websocket/blockSubscribe
+    type: APIReference
+  - url: https://docs.syndica.io/platform/concepts/api-keys
+    type: Authentication
+  description: Standard Solana RPC PubSub WebSocket service supporting accountSubscribe, programSubscribe,
+    signatureSubscribe, slotSubscribe, blockSubscribe, logsSubscribe, and rootSubscribe. Provides a drop-in
+    replacement for `wss://api.mainnet-beta.solana.com` with Syndica's edge routing, validator
+    consolidation, and per-credential rate limits.
+- aid: syndica:syndica-chainstream-api
+  name: Syndica ChainStream API
+  tags:
+  - Solana
+  - ChainStream
+  - Streaming
+  - WebSocket
+  - JSON-RPC
+  - Real Time
+  - Blockchain
+  humanURL: https://docs.syndica.io/platform/chainstream-api/
+  baseURL: wss://chainstream.api.syndica.io
+  properties:
+  - url: https://docs.syndica.io/platform/chainstream-api/
+    type: Documentation
+  - url: https://docs.syndica.io/platform/chainstream-api/slot-subscriptions
+    type: APIReference
+  - url: https://docs.syndica.io/platform/concepts/api-keys
+    type: Authentication
+  - url: https://syndica.io/infrastructure/chainstream
+    type: ProductPage
+  - url: https://blog.syndica.io/solana-data-streaming-how-to-power-your-dapp-with-real-time-data/
+    type: Blog
+  description: ChainStream is Syndica's real-time Solana data streaming API. It consolidates updates from
+    multiple validators using a "fastest wins" strategy so the subscriber benefits from the lowest-latency
+    notification across the validator set, and offers an optional `verified` parameter that delivers only
+    transactions confirmed by multiple validators at `processed` commitment. ChainStream uses JSON-RPC
+    2.0 over WebSocket (`wss://chainstream.api.syndica.io/api-key/<API_KEY>`) and supports
+    `transactionsSubscribe`, `slotsSubscribe`, and encoded `blocksSubscribe` against `solana-mainnet`
+    (devnet coming). Production users have cut limit-order time-to-fill from 10s to 300ms with it.
+- aid: syndica:syndica-sig-validator-rpc-api
+  name: Syndica Sig Validator RPC API
+  tags:
+  - Solana
+  - Validator
+  - Sig
+  - Zig
+  - Open Source
+  - RPC
+  humanURL: https://github.com/Syndica/sig
+  properties:
+  - url: https://github.com/Syndica/sig
+    type: GitHubRepository
+  - url: https://sig.fun/
+    type: Documentation
+  - url: https://syndica.io/open-source/sig
+    type: ProductPage
+  - url: https://blog.syndica.io/tag/sig/
+    type: Blog
+  - url: https://blog.syndica.io/a-solana-validator-client-explained-everything-you-need-to-know/
+    type: Blog
+  description: Sig is Syndica's open-source Solana validator client implemented in Zig, built for
+    performance, modular RPC, and read-optimized operation. The project exposes a Solana-compatible RPC
+    surface and is being developed in the open under the Apache-2.0 license, with companion libraries
+    rocksdb-zig, lsquic, boringssl-zig, zstd.zig, and base58-zig in the same GitHub organization.
+name: Syndica
+tags:
+- Solana
+- Blockchain
+- Web3
+- RPC
+- Streaming
+- Infrastructure
+- Validator
+- Staking
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- url: https://syndica.io
+  type: Portal
+- url: https://syndica.io/enterprise
+  name: Enterprise Portal
+  type: Portal
+- url: https://docs.syndica.io
+  type: Documentation
+- url: https://docs.syndica.io/platform/staking/overview
+  name: Stake Docs
+  type: Documentation
+- url: https://docs.syndica.io/platform/faq
+  type: FAQ
+- url: https://docs.syndica.io/platform/support
+  type: Support
+- url: https://status.syndica.io
+  type: StatusPage
+- url: https://blog.syndica.io/
+  type: Blog
+- url: https://syndica.io/research?n=library
+  name: Research Library
+  type: Research
+- url: https://syndica.io/company/about-us
+  type: AboutUs
+- url: https://syndica.io/company/contact-us
+  type: ContactUs
+- url: https://syndica.io/company/careers
+  type: Careers
+- url: https://syndica.io/enterprise
+  name: Contact Sales
+  type: SignUp
+- url: https://syndica.io/enterprise/calculator
+  name: Cost Estimator
+  type: Pricing
+- url: https://syndica.io/stake
+  name: Stake With Syndica
+  type: ProductPage
+- url: https://syndica.io/open-source/sig
+  name: Sig Validator
+  type: OpenSource
+- url: https://sig.fun/
+  name: Sig Docs
+  type: Documentation
+- url: https://github.com/Syndica
+  type: GitHubOrganization
+- url: https://github.com/Syndica/sig
+  name: Sig Validator (Zig)
+  type: GitHubRepository
+- url: https://github.com/Syndica/solana-rpc-demo
+  name: Solana RPC Demo (Rust)
+  type: GitHubRepository
+- url: https://github.com/Syndica/rocksdb-zig
+  name: rocksdb-zig
+  type: GitHubRepository
+- url: https://www.linkedin.com/company/syndica-io
+  type: LinkedIn
+- url: https://twitter.com/Syndica_io
+  type: X-Twitter
+- url: mailto:support@syndica.io
+  name: support@syndica.io
+  type: Support
+- type: Features
+  data:
+  - Solana JSON-RPC over HTTP — fault-tolerant, load-balanced elastic-node architecture
+  - Solana JSON-RPC PubSub over WebSocket — accountSubscribe, programSubscribe, signatureSubscribe,
+    slotSubscribe, blockSubscribe, logsSubscribe, rootSubscribe
+  - ChainStream real-time streaming API — transactionsSubscribe, slotsSubscribe, blocksSubscribe over
+    WebSocket JSON-RPC 2.0 at wss://chainstream.api.syndica.io
+  - ChainStream "fastest wins" multi-validator consolidation for lower latency and no-miss delivery
+  - ChainStream `verified` parameter for cross-validator confirmation at `processed` commitment
+  - Edge gateway routing across four global regions — Northern Virginia, Oregon, London, Singapore
+  - Per-credential (API key) custom rate-limit rules — per-method, per-IP, per-credential
+  - Detailed observability — RPC call logging, performance metrics, usage insights, analytics dashboard
+  - 99.99% uptime SLA on production endpoints; billions of RPC requests served monthly
+  - 10M free RPC requests per month entry tier; enterprise pricing via Cost Estimator
+  - Open-source Sig validator client written in Zig (Apache-2.0) for read-optimized validator operation
+  - Solana staking validator with 0% commission, MEV optimization via Jito-Solana client
+  - Research arm publishing Solana protocol and consensus research
+  sources:
+  - https://syndica.io
+  - https://syndica.io/enterprise
+  - https://docs.syndica.io/platform/chainstream-api/
+  - https://docs.syndica.io/platform/solana-rpc/overview
+  - https://blog.syndica.io/credential-rate-limits-manage-and-secure-your-solana-rpc-endpoints-using-custom-rules/
+  - https://github.com/Syndica/sig
+  updated: '2026-05-25'
+- type: UseCases
+  data:
+  - name: High-frequency Solana trading
+    description: Power on-chain trading bots, market makers, and liquidation engines with low-latency
+      ChainStream notifications — production users have cut limit-order time-to-fill from 10s to 300ms.
+  - name: DEX and DeFi backends
+    description: Stream account, program, and signature updates for AMMs, perps, and lending protocols
+      without running self-hosted validator infrastructure.
+  - name: Wallet and explorer infrastructure
+    description: Serve high-volume getAccountInfo, getTransaction, and getSignaturesForAddress traffic
+      from Syndica's load-balanced HTTP RPC fleet.
+  - name: Indexers and data warehouses
+    description: Continuously ingest Solana transactions, slots, and blocks via ChainStream into
+      ClickHouse, BigQuery, or self-hosted Postgres for analytics.
+  - name: NFT mint and marketplace tooling
+    description: Subscribe to program-derived account changes for real-time mint, list, sale, and bid
+      detection.
+  - name: Solana staking
+    description: Delegate SOL to the Syndica validator (0% commission, Jito-Solana client, MEV
+      optimization) for self-custody staking rewards.
+  - name: Solana protocol R&D
+    description: Build on top of, or contribute to, Sig — Syndica's open-source Zig validator client —
+      and consume its companion libraries (rocksdb-zig, lsquic, boringssl-zig).
+  sources:
+  - https://syndica.io
+  - https://syndica.io/enterprise
+  - https://docs.syndica.io/platform/chainstream-api/
+  - https://syndica.io/stake
+  updated: '2026-05-25'
+- type: Integrations
+  data:
+  - name: Solana mainnet-beta
+    description: Drop-in replacement for `api.mainnet-beta.solana.com` HTTP and WebSocket endpoints.
+  - name: Solana web3.js
+    description: Use Syndica's RPC URL directly with `@solana/web3.js` `Connection` and `PublicKey`
+      flows.
+  - name: solana-cli
+    description: Configure `solana config set --url https://solana-mainnet.api.syndica.io/api-key/<KEY>`
+      for CLI access.
+  - name: Anchor framework
+    description: Point Anchor's provider at a Syndica RPC URL for Solana program development.
+  - name: Helius / Triton / QuickNode workflows
+    description: Mix-and-match providers — Syndica positions itself as the Solana-only specialist
+      alongside multi-chain RPC vendors.
+  - name: Jito-Solana
+    description: Syndica's validator runs the Jito-Solana client for MEV-aware block production.
+  - name: GitHub
+    description: Open-source Sig validator and companion Zig libraries are developed publicly under the
+      Syndica GitHub organization.
+  sources:
+  - https://syndica.io
+  - https://github.com/Syndica
+  - https://syndica.io/stake
+  updated: '2026-05-25'
+- type: Solutions
+  data:
+  - name: Solana RPC (Shared)
+    description: Multi-tenant Solana JSON-RPC HTTP and WebSocket endpoints with 10M free monthly
+      requests, credential-level rate limits, and global edge routing.
+  - name: ChainStream
+    description: Premium real-time Solana data streaming API consolidating updates from multiple
+      validators with "fastest wins" routing and optional cross-validator verification.
+  - name: Enterprise / Dedicated
+    description: Custom RPC capacity, dedicated nodes, ChainStream throughput, and SLA — priced via
+      the Cost Estimator and direct sales.
+  - name: Staking
+    description: Delegate SOL to the Syndica validator (0% commission, Jito-Solana, MEV optimization)
+      with full self-custody.
+  - name: Sig (Open Source)
+    description: Syndica's open-source Zig Solana validator client, plus companion libraries — free
+      to use and contribute to.
+  - name: Research
+    description: Syndica Research Library — public protocol and consensus research alongside the
+      Research Blog tag.
+  sources:
+  - https://syndica.io
+  - https://syndica.io/enterprise
+  - https://syndica.io/enterprise/calculator
+  - https://syndica.io/stake
+  - https://syndica.io/open-source/sig
+  - https://syndica.io/research?n=library
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Consuming
+description: Syndica is a Solana-only infrastructure company building developer infrastructure for
+  Web3. Its production platform provides fault-tolerant, load-balanced Solana JSON-RPC over HTTP and
+  WebSocket from four global regions, plus ChainStream — a real-time JSON-RPC streaming API that
+  consolidates transaction, slot, and block updates from multiple validators using a "fastest wins"
+  strategy with optional cross-validator verification. Syndica also operates a 0%-commission Solana
+  staking validator running Jito-Solana for MEV optimization, publishes Solana protocol research,
+  and develops Sig — an open-source Solana validator client written in Zig — together with companion
+  libraries (rocksdb-zig, lsquic, boringssl-zig, zstd.zig, base58-zig) under the Apache-2.0 license.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'
