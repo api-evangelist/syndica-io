@@ -1,0 +1,883 @@
+asyncapi: '2.6.0'
+info:
+  title: Syndica Solana RPC PubSub & ChainStream WebSocket API
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 specification for Syndica's Solana WebSocket surface. Covers two
+    products:
+
+      1. **Solana RPC PubSub** — JSON-RPC 2.0 subscriptions served from
+         `wss://solana-mainnet.api.syndica.io/api-key/<API_KEY>`. Drop-in
+         compatible with the standard Solana PubSub methods (`accountSubscribe`,
+         `blockSubscribe`, `logsSubscribe`, `programSubscribe`,
+         `signatureSubscribe`, `slotSubscribe`, `voteSubscribe`,
+         `rootSubscribe`) and their matching `*Unsubscribe` calls.
+      2. **ChainStream** — Syndica's proprietary low-latency JSON-RPC 2.0
+         streaming API served from
+         `wss://chainstream.api.syndica.io/api-key/<API_KEY>`. Consolidates
+         updates across multiple validators using a "fastest wins" strategy
+         and supports `transactionsSubscribe`, `slotsSubscribe`, and
+         `blocksSubscribe`, plus their `*Unsubscribe` counterparts.
+
+    Authentication is performed by embedding the credential in the URL path.
+  contact:
+    name: Syndica Support
+    url: https://docs.syndica.io
+    email: support@syndica.io
+  license:
+    name: Proprietary
+    url: https://syndica.io
+
+defaultContentType: application/json
+
+servers:
+  solana-rpc-pubsub:
+    url: solana-mainnet.api.syndica.io/api-key/{apiKey}
+    protocol: wss
+    description: Syndica Solana RPC PubSub WebSocket endpoint.
+    variables:
+      apiKey:
+        description: Syndica API key (credential).
+        default: REPLACE_WITH_API_KEY
+  chainstream:
+    url: chainstream.api.syndica.io/api-key/{apiKey}
+    protocol: wss
+    description: Syndica ChainStream WebSocket endpoint.
+    variables:
+      apiKey:
+        description: Syndica API key (credential).
+        default: REPLACE_WITH_API_KEY
+
+channels:
+
+  # ---------------- Solana RPC PubSub ----------------
+
+  accountSubscribe:
+    description: |
+      Subscribe to an account to receive notifications when the lamports or data
+      for a given account public key changes.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: accountSubscribe
+      summary: Open an account subscription.
+      message:
+        $ref: '#/components/messages/AccountSubscribeRequest'
+    subscribe:
+      operationId: accountNotification
+      summary: Receive account change notifications.
+      message:
+        $ref: '#/components/messages/AccountNotification'
+
+  accountUnsubscribe:
+    description: Unsubscribe from account-change notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: accountUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: accountUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  blockSubscribe:
+    description: |
+      Subscribe to receive notifications when a new block is confirmed or
+      finalized. Filter by `all` or by `mentionsAccountOrProgram`.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: blockSubscribe
+      message:
+        $ref: '#/components/messages/BlockSubscribeRequest'
+    subscribe:
+      operationId: blockNotification
+      message:
+        $ref: '#/components/messages/BlockNotification'
+
+  blockUnsubscribe:
+    description: Unsubscribe from block notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: blockUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: blockUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  logsSubscribe:
+    description: |
+      Subscribe to transaction log notifications. Filter by `all`, `allWithVotes`,
+      or by `mentions` of one account public key.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: logsSubscribe
+      message:
+        $ref: '#/components/messages/LogsSubscribeRequest'
+    subscribe:
+      operationId: logsNotification
+      message:
+        $ref: '#/components/messages/LogsNotification'
+
+  logsUnsubscribe:
+    description: Unsubscribe from log notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: logsUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: logsUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  programSubscribe:
+    description: |
+      Subscribe to a program to receive notifications when the lamports or data
+      for any account owned by the program changes.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: programSubscribe
+      message:
+        $ref: '#/components/messages/ProgramSubscribeRequest'
+    subscribe:
+      operationId: programNotification
+      message:
+        $ref: '#/components/messages/ProgramNotification'
+
+  programUnsubscribe:
+    description: Unsubscribe from program-account notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: programUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: programUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  signatureSubscribe:
+    description: |
+      Subscribe to a transaction signature to receive a single notification when
+      the transaction reaches the requested commitment level.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: signatureSubscribe
+      message:
+        $ref: '#/components/messages/SignatureSubscribeRequest'
+    subscribe:
+      operationId: signatureNotification
+      message:
+        $ref: '#/components/messages/SignatureNotification'
+
+  signatureUnsubscribe:
+    description: Unsubscribe from signature notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: signatureUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: signatureUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  slotSubscribe:
+    description: Subscribe to receive notification any time a slot is processed by the validator.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: slotSubscribe
+      message:
+        $ref: '#/components/messages/SimpleSubscribeRequest'
+    subscribe:
+      operationId: slotNotification
+      message:
+        $ref: '#/components/messages/SlotNotification'
+
+  slotUnsubscribe:
+    description: Unsubscribe from slot notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: slotUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: slotUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  voteSubscribe:
+    description: |
+      Subscribe to receive notification any time a new vote is observed in gossip.
+      These votes are pre-consensus and not guaranteed to land on chain.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: voteSubscribe
+      message:
+        $ref: '#/components/messages/SimpleSubscribeRequest'
+    subscribe:
+      operationId: voteNotification
+      message:
+        $ref: '#/components/messages/VoteNotification'
+
+  voteUnsubscribe:
+    description: Unsubscribe from vote notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: voteUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: voteUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  rootSubscribe:
+    description: Subscribe to receive notification any time a new root is set by the validator.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: rootSubscribe
+      message:
+        $ref: '#/components/messages/SimpleSubscribeRequest'
+    subscribe:
+      operationId: rootNotification
+      message:
+        $ref: '#/components/messages/RootNotification'
+
+  rootUnsubscribe:
+    description: Unsubscribe from root notifications.
+    servers:
+      - solana-rpc-pubsub
+    publish:
+      operationId: rootUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: rootUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  # ---------------- ChainStream ----------------
+
+  chainstream.transactionsSubscribe:
+    description: |
+      ChainStream `transactionsSubscribe` — receive real-time Solana transaction
+      notifications consolidated across multiple validators. Supports the optional
+      `verified` parameter to deliver only transactions confirmed by multiple
+      validators at `processed` commitment.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamTransactionsSubscribe
+      message:
+        $ref: '#/components/messages/ChainstreamTransactionsSubscribeRequest'
+    subscribe:
+      operationId: chainstreamTransactionsNotification
+      message:
+        $ref: '#/components/messages/ChainstreamTransactionsNotification'
+
+  chainstream.transactionsUnsubscribe:
+    description: Unsubscribe from ChainStream transaction notifications.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamTransactionsUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: chainstreamTransactionsUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  chainstream.slotsSubscribe:
+    description: ChainStream `slotsSubscribe` — real-time slot updates consolidated across validators.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamSlotsSubscribe
+      message:
+        $ref: '#/components/messages/ChainstreamSlotsSubscribeRequest'
+    subscribe:
+      operationId: chainstreamSlotsNotification
+      message:
+        $ref: '#/components/messages/ChainstreamSlotsNotification'
+
+  chainstream.slotsUnsubscribe:
+    description: Unsubscribe from ChainStream slot notifications.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamSlotsUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: chainstreamSlotsUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+  chainstream.blocksSubscribe:
+    description: ChainStream `blocksSubscribe` — encoded block notifications consolidated across validators.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamBlocksSubscribe
+      message:
+        $ref: '#/components/messages/ChainstreamBlocksSubscribeRequest'
+    subscribe:
+      operationId: chainstreamBlocksNotification
+      message:
+        $ref: '#/components/messages/ChainstreamBlocksNotification'
+
+  chainstream.blocksUnsubscribe:
+    description: Unsubscribe from ChainStream block notifications.
+    servers:
+      - chainstream
+    publish:
+      operationId: chainstreamBlocksUnsubscribe
+      message:
+        $ref: '#/components/messages/UnsubscribeRequest'
+    subscribe:
+      operationId: chainstreamBlocksUnsubscribeResult
+      message:
+        $ref: '#/components/messages/UnsubscribeResult'
+
+components:
+
+  messages:
+
+    # ---- Generic JSON-RPC envelopes ----
+
+    SimpleSubscribeRequest:
+      name: SimpleSubscribeRequest
+      title: JSON-RPC subscription request (no parameters)
+      payload:
+        type: object
+        required: [jsonrpc, id, method]
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string }
+          params:
+            type: array
+            items: {}
+
+    UnsubscribeRequest:
+      name: UnsubscribeRequest
+      title: JSON-RPC unsubscribe request
+      payload:
+        type: object
+        required: [jsonrpc, id, method, params]
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string }
+          params:
+            type: array
+            items: { type: integer }
+            description: '[subscriptionId]'
+
+    UnsubscribeResult:
+      name: UnsubscribeResult
+      title: JSON-RPC unsubscribe result
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          result: { type: boolean }
+
+    # ---- accountSubscribe ----
+
+    AccountSubscribeRequest:
+      name: AccountSubscribeRequest
+      payload:
+        type: object
+        required: [jsonrpc, id, method, params]
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [accountSubscribe] }
+          params:
+            type: array
+            minItems: 1
+            maxItems: 2
+            items:
+              oneOf:
+                - type: string
+                  description: Account public key (base-58).
+                - $ref: '#/components/schemas/AccountSubscribeConfig'
+
+    AccountNotification:
+      name: AccountNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [accountNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  context:
+                    $ref: '#/components/schemas/RpcContext'
+                  value:
+                    $ref: '#/components/schemas/AccountInfo'
+
+    # ---- blockSubscribe ----
+
+    BlockSubscribeRequest:
+      name: BlockSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [blockSubscribe] }
+          params:
+            type: array
+            items:
+              oneOf:
+                - type: string
+                  enum: [all]
+                - type: object
+                  properties:
+                    mentionsAccountOrProgram: { type: string }
+                - $ref: '#/components/schemas/BlockSubscribeConfig'
+
+    BlockNotification:
+      name: BlockNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [blockNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  context:
+                    $ref: '#/components/schemas/RpcContext'
+                  value:
+                    type: object
+                    properties:
+                      slot: { type: integer }
+                      err: { type: [object, 'null'] }
+                      block:
+                        $ref: '#/components/schemas/Block'
+
+    # ---- logsSubscribe ----
+
+    LogsSubscribeRequest:
+      name: LogsSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [logsSubscribe] }
+          params:
+            type: array
+            items:
+              oneOf:
+                - type: string
+                  enum: [all, allWithVotes]
+                - type: object
+                  properties:
+                    mentions:
+                      type: array
+                      items: { type: string }
+                - $ref: '#/components/schemas/CommitmentConfig'
+
+    LogsNotification:
+      name: LogsNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [logsNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  context:
+                    $ref: '#/components/schemas/RpcContext'
+                  value:
+                    type: object
+                    properties:
+                      signature: { type: string }
+                      err: { type: [object, 'null'] }
+                      logs:
+                        type: array
+                        items: { type: string }
+
+    # ---- programSubscribe ----
+
+    ProgramSubscribeRequest:
+      name: ProgramSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [programSubscribe] }
+          params:
+            type: array
+            items:
+              oneOf:
+                - type: string
+                  description: Program public key (base-58).
+                - $ref: '#/components/schemas/ProgramSubscribeConfig'
+
+    ProgramNotification:
+      name: ProgramNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [programNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  context:
+                    $ref: '#/components/schemas/RpcContext'
+                  value:
+                    type: object
+                    properties:
+                      pubkey: { type: string }
+                      account:
+                        $ref: '#/components/schemas/AccountInfo'
+
+    # ---- signatureSubscribe ----
+
+    SignatureSubscribeRequest:
+      name: SignatureSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [signatureSubscribe] }
+          params:
+            type: array
+            items:
+              oneOf:
+                - type: string
+                  description: Transaction signature (base-58).
+                - $ref: '#/components/schemas/SignatureSubscribeConfig'
+
+    SignatureNotification:
+      name: SignatureNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [signatureNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  context:
+                    $ref: '#/components/schemas/RpcContext'
+                  value:
+                    type: object
+                    properties:
+                      err: { type: [object, 'null'] }
+
+    # ---- slotSubscribe ----
+
+    SlotNotification:
+      name: SlotNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [slotNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  parent: { type: integer }
+                  root: { type: integer }
+                  slot: { type: integer }
+
+    # ---- voteSubscribe ----
+
+    VoteNotification:
+      name: VoteNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [voteNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  hash: { type: string }
+                  slots:
+                    type: array
+                    items: { type: integer }
+                  timestamp: { type: [integer, 'null'] }
+                  signature: { type: string }
+                  votePubkey: { type: string }
+
+    # ---- rootSubscribe ----
+
+    RootNotification:
+      name: RootNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [rootNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: integer
+                description: Latest root slot number.
+
+    # ---- ChainStream ----
+
+    ChainstreamTransactionsSubscribeRequest:
+      name: ChainstreamTransactionsSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [transactionsSubscribe] }
+          params:
+            type: array
+            items:
+              type: object
+              properties:
+                network: { type: string, enum: [solana-mainnet] }
+                verified:
+                  type: boolean
+                  description: When true, deliver only transactions confirmed by multiple validators at `processed` commitment.
+                filter:
+                  type: object
+                  description: Filter by accounts included/excluded, vote, failed status, etc.
+
+    ChainstreamTransactionsNotification:
+      name: ChainstreamTransactionsNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [transactionsNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  slot: { type: integer }
+                  signature: { type: string }
+                  transaction:
+                    type: object
+                    description: Encoded transaction payload.
+                  meta:
+                    type: object
+                    description: Transaction status metadata.
+
+    ChainstreamSlotsSubscribeRequest:
+      name: ChainstreamSlotsSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [slotsSubscribe] }
+          params:
+            type: array
+            items:
+              type: object
+              properties:
+                network: { type: string, enum: [solana-mainnet] }
+
+    ChainstreamSlotsNotification:
+      name: ChainstreamSlotsNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [slotsNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  slot: { type: integer }
+                  parent: { type: integer }
+                  status: { type: string, enum: [processed, confirmed, finalized] }
+
+    ChainstreamBlocksSubscribeRequest:
+      name: ChainstreamBlocksSubscribeRequest
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          id: { type: integer }
+          method: { type: string, enum: [blocksSubscribe] }
+          params:
+            type: array
+            items:
+              type: object
+              properties:
+                network: { type: string, enum: [solana-mainnet] }
+                encoding: { type: string, enum: [base64, base58, json, jsonParsed] }
+                transactionDetails: { type: string, enum: [full, accounts, signatures, none] }
+
+    ChainstreamBlocksNotification:
+      name: ChainstreamBlocksNotification
+      payload:
+        type: object
+        properties:
+          jsonrpc: { type: string, enum: ['2.0'] }
+          method: { type: string, enum: [blocksNotification] }
+          params:
+            type: object
+            properties:
+              subscription: { type: integer }
+              result:
+                type: object
+                properties:
+                  slot: { type: integer }
+                  block:
+                    $ref: '#/components/schemas/Block'
+
+  schemas:
+
+    Commitment:
+      type: string
+      enum: [processed, confirmed, finalized]
+
+    CommitmentConfig:
+      type: object
+      properties:
+        commitment:
+          $ref: '#/components/schemas/Commitment'
+
+    Encoding:
+      type: string
+      enum: [base58, base64, base64+zstd, jsonParsed]
+
+    RpcContext:
+      type: object
+      properties:
+        slot: { type: integer }
+        apiVersion: { type: string }
+
+    AccountInfo:
+      type: object
+      properties:
+        lamports: { type: integer }
+        owner: { type: string }
+        data:
+          oneOf:
+            - type: array
+              items: { type: string }
+            - type: object
+        executable: { type: boolean }
+        rentEpoch: { type: integer }
+        space: { type: integer }
+
+    AccountSubscribeConfig:
+      type: object
+      properties:
+        commitment:
+          $ref: '#/components/schemas/Commitment'
+        encoding:
+          $ref: '#/components/schemas/Encoding'
+
+    BlockSubscribeConfig:
+      type: object
+      properties:
+        commitment:
+          $ref: '#/components/schemas/Commitment'
+        encoding:
+          $ref: '#/components/schemas/Encoding'
+        transactionDetails:
+          type: string
+          enum: [full, accounts, signatures, none]
+        showRewards: { type: boolean }
+        maxSupportedTransactionVersion: { type: integer }
+
+    ProgramSubscribeConfig:
+      type: object
+      properties:
+        commitment:
+          $ref: '#/components/schemas/Commitment'
+        encoding:
+          $ref: '#/components/schemas/Encoding'
+        filters:
+          type: array
+          items: { type: object }
+        withContext: { type: boolean }
+
+    SignatureSubscribeConfig:
+      type: object
+      properties:
+        commitment:
+          $ref: '#/components/schemas/Commitment'
+        enableReceivedNotification: { type: boolean }
+
+    Block:
+      type: object
+      properties:
+        blockHeight: { type: integer }
+        blockTime: { type: [integer, 'null'] }
+        blockhash: { type: string }
+        parentSlot: { type: integer }
+        previousBlockhash: { type: string }
+        transactions:
+          type: array
+          items: { type: object }
+        rewards:
+          type: array
+          items: { type: object }

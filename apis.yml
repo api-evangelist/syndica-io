@@ -45,6 +45,8 @@ apis:
     type: APIReference
   - url: https://docs.syndica.io/platform/concepts/api-keys
     type: Authentication
+  - url: https://raw.githubusercontent.com/api-evangelist/syndica-io/refs/heads/main/asyncapi/syndica-io-asyncapi.yml
+    type: AsyncAPI
   description: Standard Solana RPC PubSub WebSocket service supporting accountSubscribe, programSubscribe,
     signatureSubscribe, slotSubscribe, blockSubscribe, logsSubscribe, and rootSubscribe. Provides a drop-in
     replacement for `wss://api.mainnet-beta.solana.com` with Syndica's edge routing, validator
@@ -72,6 +74,8 @@ apis:
     type: ProductPage
   - url: https://blog.syndica.io/solana-data-streaming-how-to-power-your-dapp-with-real-time-data/
     type: Blog
+  - url: https://raw.githubusercontent.com/api-evangelist/syndica-io/refs/heads/main/asyncapi/syndica-io-asyncapi.yml
+    type: AsyncAPI
   description: ChainStream is Syndica's real-time Solana data streaming API. It consolidates updates from
     multiple validators using a "fastest wins" strategy so the subscriber benefits from the lowest-latency
     notification across the validator set, and offers an optional `verified` parameter that delivers only
