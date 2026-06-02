@@ -1,0 +1,35 @@
+{
+  "repo": "syndica-io",
+  "feeds": [
+    {
+      "source": "https://blog.syndica.io/solana-data-streaming-how-to-power-your-dapp-with-real-time-data/",
+      "feed_url": "https://blog.syndica.io/rss/",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    },
+    {
+      "source": "https://blog.syndica.io/tag/sig/",
+      "feed_url": "https://blog.syndica.io/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://blog.syndica.io/a-solana-validator-client-explained-everything-you-need-to-know/",
+      "feed_url": "https://blog.syndica.io/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    },
+    {
+      "source": "https://blog.syndica.io/",
+      "feed_url": "https://blog.syndica.io/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-06-01T23:35:02Z"
+}
