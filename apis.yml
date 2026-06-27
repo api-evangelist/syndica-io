@@ -15,7 +15,7 @@ apis:
   - url: https://docs.syndica.io/platform/solana-rpc/overview
     type: Documentation
   - url: https://docs.syndica.io/platform/getting-started/make-your-first-rpc-call
-    type: Quickstart
+    type: GettingStarted
   - url: https://docs.syndica.io/platform/concepts/api-keys
     type: Authentication
   - url: https://blog.syndica.io/credential-rate-limits-manage-and-secure-your-solana-rpc-endpoints-using-custom-rules/
@@ -151,7 +151,7 @@ common:
   type: Careers
 - url: https://syndica.io/enterprise
   name: Contact Sales
-  type: SignUp
+  type: Signup
 - url: https://syndica.io/enterprise/calculator
   name: Cost Estimator
   type: Pricing
