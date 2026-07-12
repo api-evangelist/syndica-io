@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: syndica.io
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Oct 14 23:59:59 2026 GMT
+  hsts: false
+- host: docs.syndica.io
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Feb  4 23:59:59 2027 GMT
+  hsts: false
+- host: solana-mainnet.api.syndica.io
+  https: false
+domains:
+- domain: syndica.io
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: false
