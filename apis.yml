@@ -1,4 +1,4 @@
-aid: syndica
+aid: syndica-io
 url: https://raw.githubusercontent.com/api-evangelist/syndica-io/refs/heads/main/apis.yml
 apis:
 - aid: syndica:syndica-solana-rpc-http-api
