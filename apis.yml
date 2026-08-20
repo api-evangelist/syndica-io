@@ -34,6 +34,13 @@ apis:
   - RPC
   - Blockchain
   - WebSocket
+  - Pub-Sub
+  - Streaming
+  tags_raw:
+  - Solana
+  - RPC
+  - Blockchain
+  - WebSocket
   - PubSub
   - Streaming
   humanURL: https://docs.syndica.io/platform/getting-started/subscribe-to-websocket-events
@@ -54,6 +61,14 @@ apis:
 - aid: syndica:syndica-chainstream-api
   name: Syndica ChainStream API
   tags:
+  - Solana
+  - ChainStream
+  - Streaming
+  - WebSocket
+  - JSON-RPC
+  - Real-Time
+  - Blockchain
+  tags_raw:
   - Solana
   - ChainStream
   - Streaming
@@ -86,6 +101,13 @@ apis:
 - aid: syndica:syndica-sig-validator-rpc-api
   name: Syndica Sig Validator RPC API
   tags:
+  - Solana
+  - Validator
+  - Sig
+  - Zig
+  - Open-Source
+  - RPC
+  tags_raw:
   - Solana
   - Validator
   - Sig
