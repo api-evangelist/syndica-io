@@ -34,7 +34,7 @@ apis:
   - RPC
   - Blockchain
   - WebSocket
-  - PubSub
+  - Pub-Sub
   - Streaming
   tags_raw:
   - Solana
