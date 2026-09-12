@@ -167,6 +167,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/syndica-io.png
 access: 3rd-Party
 common:
+- type: Website
+  url: https://www.syndica.io/
 - type: DomainSecurity
   url: security/syndica-io-domain-security.yml
 - url: https://syndica.io
